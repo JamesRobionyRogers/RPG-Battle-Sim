@@ -178,12 +178,14 @@ class Game:
             self.running = False
 
 
-# sourced from: https://stackoverflow.com/questions/9246076/how-to-print-one-character-at-a-time-on-one-line
-def type(string):
+def type(string, letter_pause=0.015, enter_pause=0.5):  # sourced from: https://stackoverflow.com/questions/9246076/how-to-print-one-character-at-a-time-on-one-line
     for letter in string:
         sys.stdout.write(letter)
         sys.stdout.flush()
-        time.sleep(0.25)
+        if letter == "\n":
+            time.sleep(enter_pause)
+        else:
+            time.sleep(letter_pause)
 
 
 # running code
