@@ -1,49 +1,32 @@
 import random
 import time
 import sys
-
-# Setting Constants
+# importing game settings
+from AS91897_JamesRobionyRogers_Settings import *
 
 # Setting Vairables
 running = True
 
+
 # Defining classes
-
-
-class Opponent:
+class Characters():
     def __init__(self):
-        self.OPPONENT_NAME = random.choice(['Blazehound', 'Shadetooth', 'Blightfigure', 'Hauntbug'])
-        self.health = 100
-        self.damage = 0
-        self.attack_text = [f"{self.OPPONENT_NAME} swung potentialy causing {self.damage} points of damage",
-                            f"{self.OPPONENT_NAME} swung potentialy causing {self.damage} points of damage"]
-        # self.player_health = Player().health
-
-    def attack(self):
-        # set vairables
-        self.damage = random.randint(5, 16)  # random.randint(1, 20)
-        self.message = 'Hello'  # random.choice(self.reponses)
-
-        # attack message
-        print(random.choice(self.attack_text))
-
-        # reduce the health of opponent unless dodged (8%)
-        if random.randint(1, 100) <= 8:  # opponent dodged message
-            print(f"Fortunatly you were able to dodge the {self.OPPONENT_NAME}'s attack'. No damage was taken...\n")
-        else:
-            self.player.health -= self.damage
-
-        print(f"opponent: {self.health}, player: {self.player.health}")
-
-
-class Player():
-    def __init__(self):
+        # initiating the player vairables
         self.set_display_name = self.set_display_name()
-        self.health = 100
-        self.weapon = {'Sword': random.randint(10, 15), 'Toothbrush': random.randint(12, 18)}  # dict with weapon name and damange
-        self.selected_weapon = ""
-        self.damage = 0
-        self.opponant = Opponent()
+        self.player_health = PLAYER_HEALTH
+        self.all_weapons = ALL_WEAPONS  # dict with weapon name and damange
+        self.available_weapons = {}
+        self.player_selected_weapon = ""
+        self.player_damage = 0
+        # assigning default available weapons
+        self.available_weapons = self.all_weapons
+
+        # initiating the opponent vairables
+        self.opponent_name = OPPONENT_NAME
+        self.opponent_health = OPPONENT_HEALTH
+        print("OPPONENT_HEALTH", self.opponent_health)
+        self.opponent_damage = OPPONENT_DAMAGE
+        self.opponent_attack_text = OPPONENT_ATTACK_TEXT
 
     def set_display_name(self):
         type("\nWhat is your display name: ", letter_pause=0.01)
@@ -51,51 +34,51 @@ class Player():
 
     def select_weapon(self):
         # printing to player
-        print("\nWeapons available: \n")
+        type("\n\nWeapons available: \n", enter_pause=0.2)
 
-        # itterate through available weapons
-        for weapon in self.weapon:
-            print(f"Weapon: {weapon}      Damage: {self.weapon[weapon]}")
+        # itterate through available weapons and assign random damage values
+        for weapon in self.available_weapons:
+            self.available_weapons[weapon] = random.randint(10, 18)
+            type(f"Weapon: {weapon}      Damage: {self.available_weapons[weapon]}\n")
 
         # selecting weapon
-        while self.selected_weapon not in self.weapon:
-            self.selected_weapon = input("\nWeapon of choice: ")
-            print(self.selected_weapon)
+        while self.player_selected_weapon not in self.available_weapons:
+            type("\nWeapon of choice: ")
+            self.player_selected_weapon = input()
 
         # setting the remainder of the vairables for the turn
-        self.damage = self.weapon[self.selected_weapon]
+        self.player_damage = self.available_weapons[self.player_selected_weapon]
 
         # confirming to player what has been chosen
-        print(f"\nChosen weapon: {self.selected_weapon} with a damage of {self.damage}")
+        type(f"\nChosen weapon: {self.player_selected_weapon} with a damage of {self.player_damage}\n")
 
-    def attack(self):
+    def player_attack(self):
         # attack message
-        print(f"{self.display_name} swung the {self.selected_weapon} potentialy causing {self.damage} points of damage")
+        type(f"\n{self.display_name} swung the {self.player_selected_weapon} potentialy causing {self.player_damage} points of damage\n")
 
         # reduce the health of opponent unless dodged (8%)
         if random.randint(1, 100) <= 8:  # opponent dodged message
-            print("Unfortunatly, the opponent managed to dodge. Your attack was ineffective this time...\n")
+            type("Unfortunatly, the opponent managed to dodge. Your attack was ineffective this time...\n\n")
         else:
-            self.opponant.health -= self.damage
+            self.opponent_health -= self.player_damage
 
-        print(f"opponent: {self.opponant.health}, player: {self.health}")
+    def opponent_attack(self):
+        # attack message
+        type(random.choice(self.opponent_attack_text))
+
+        # reduce the health of opponent unless dodged (8%)
+        if random.randint(1, 100) <= 8:  # opponent dodged message
+            print(f"\nFortunatly you were able to dodge the {self.opponent_name}'s attack.    No damage was taken...\n")
+        else:
+            self.player_health -= self.opponent_damage
 
 
 class Game:
     def __init__(self):
 
         # defining game constants
-        self.TITLE = "RPG Battle Sim"
-        self.HOW_TO_PLAY = f"""
-        How To Play:
-
-        {self.TITLE} is a turn based text game programmed in python.
-        The simulator will allow the player to battle a computer opponent.
-
-        The format of the battle will be turn based with random elements
-        included. The battle will continue until either the player's or computer's
-        character is defeated.\n
-        """
+        self.TITLE = TITLE
+        self.HOW_TO_PLAY = HOW_TO_PLAY
 
         # Defining game vairables
         self.running = True
@@ -105,9 +88,7 @@ class Game:
         self.intro()
 
         # initiate player and opponent class' after introduction
-        self.player = Player()
-        # self.player.set_display_name()
-        self.opponent = Opponent()
+        self.character = Characters()
 
     def intro(self):
         type(f"Welcome to {self.TITLE} \n", letter_pause=0.01, enter_pause=0.3)
@@ -115,35 +96,48 @@ class Game:
 
     def win_condition(self):
         # congratulation message
-
+        type(f"\nWell done {self.character.display_name} you have managed to successfully eradicate the {self.character.opponent_name}\n")
         # game stats
-
+        self.game_details()
         # game development credits
         self.credits()
-        pass
+        # exit game loop
+        self.running = False
 
     def lose_condition(self):
         # losing message
-
+        type(f"\nUnfortunatly {self.character.opponent_name} was able to defeat you :(")
+        type(f"\nTry again and see if you have the courage to defeat the dential enemies\n")
         # game stats
-
+        self.game_details()
         # game development cradits
         self.credits()
-        pass
+        # exit game loop
+        self.running = False
 
     def turn(self):
+
+        type(f"\nTurn: {self.turn_count}", enter_pause=0)
         # choose weapon
-        self.player.select_weapon()
+        self.character.select_weapon()
         # attack opponent
-        self.player.attack()
-        # self.game_details()
+        self.character.player_attack()
+        # NEED TO DO:  remove opponent health from player attack
+        self.game_details()
         # recieve attack from opponent
+        if self.character.opponent_health >= 0:  # if opponent is NOT dead
+            self.character.opponent_attack()
+            # NEED TO DO:  remove opponent health from player attack
+            self.game_details()
+
+        # proceed when player clicks enter
+        self.pause()
 
         # update general game game stats
         self.turn_count += 1
 
-        # repeat the turn again
-        pass
+        # reset needed vairables for next turn:
+        self.character.player_selected_weapon = ''
 
     def credits(self):
         # title of the Game
@@ -153,29 +147,32 @@ class Game:
 
     def game_details(self):
         # current player stats
-        print(f"Current player health: {self.player.health}")
+        type("------------------------------------------------------------\n", letter_pause=0.01, enter_pause=0)
+        type(f"Current player health: {self.character.player_health}\n", letter_pause=0.01, enter_pause=0)
         # current opponent stats
-        print(f"Current opponant health: {self.opponant.health}")
+        type(f"Current opponent health: {self.character.opponent_health}\n", letter_pause=0.01, enter_pause=0)
         # general stats of the game. E.g. turn count etc...
-        print(f"Current turn: {self.turn_count}")
+        type(f"Current turn: {self.turn_count}\n", letter_pause=0.01, enter_pause=0)
+        type("------------------------------------------------------------\n", letter_pause=0.01, enter_pause=0)
+
+    def pause(self):
+        input()
 
     def run_game(self):
 
         # intro to game has already been executed
 
-        print("What are we waiting for? Lets get right into it...")
+        type("\nWhat are we waiting for? Lets get right into it...")
 
         while self.running:
             self.turn()
 
             # when player dies
-            if self.player.health <= 0:
+            if self.character.player_health <= 0:
                 self.lose_condition()
             # when opponent dies
-            if self.opponent.health <= 0:
+            if self.character.opponent_health <= 0:
                 self.win_condition()
-
-            self.running = False
 
 
 def type(string, letter_pause=0.015, enter_pause=0.5):  # sourced from: https://stackoverflow.com/questions/9246076/how-to-print-one-character-at-a-time-on-one-line
@@ -191,24 +188,8 @@ def type(string, letter_pause=0.015, enter_pause=0.5):  # sourced from: https://
 # running code
 game = Game()
 game.run_game()
-# game.run_game()
-
-# while running:
-
-#
-# game = Game()
-
-# player = Player()
-# opponent = Opponent()
-
-
-# opponent = Opponent()
-# opponent.attack()
-
 
 """
 NOTE:
-
-Have the text itterate out letter by letter, talk to jayden about it
 lenency: if the word is in the users input then run, rather than only having to have to put the word in it
 """
