@@ -39,7 +39,10 @@ class Characters():
         # itterate through available weapons and assign random damage values
         for weapon in self.available_weapons:
             self.available_weapons[weapon] = random.randint(10, 18)
-            type(f"Weapon: {weapon}      Damage: {self.available_weapons[weapon]}\n")
+            # type(f"Weapon: {weapon}      Damage: {self.available_weapons[weapon]}\n")
+            weapon_string = f"Weapon: {weapon}"
+            damage_string = f"Damage: {self.available_weapons[weapon]}"
+            type(formatted_print(weapon_string, damage_string))
 
         # selecting weapon
         while self.player_selected_weapon not in self.available_weapons:
@@ -185,11 +188,18 @@ def type(string, letter_pause=0.015, enter_pause=0.5):  # sourced from: https://
             time.sleep(letter_pause)
 
 
-# running code
+def formatted_print(weapon, damage):  # sourced from: https://stackoverflow.com/questions/11245381/formatting-console-output
+    return "%-25s %-15s\n" % (weapon, damage)  # "%-25s" corrisponds to the max width of the left hand width (Weapon text) "%-15s" corrisponds to the max width of the right hand width (Damage text)
+
+    # running code
 game = Game()
 game.run_game()
 
 """
 NOTE:
 lenency: if the word is in the users input then run, rather than only having to have to put the word in it
+
+FEEDBACK:   REGAN MEYNELL
+- Have different opponents. Be able to vs another one then run away when you dont want to vs any more
+-
 """
