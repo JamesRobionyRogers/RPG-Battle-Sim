@@ -1,6 +1,7 @@
 import random
 import time
 import sys
+import os
 # importing game settings
 from AS91897_JamesRobionyRogers_Settings import *
 
@@ -190,6 +191,17 @@ def type(string, letter_pause=0.015, enter_pause=0.5):  # sourced from: https://
 
 def formatted_print(weapon, damage):  # sourced from: https://stackoverflow.com/questions/11245381/formatting-console-output
     return "%-25s %-15s\n" % (weapon, damage)  # "%-25s" corrisponds to the max width of the left hand width (Weapon text) "%-15s" corrisponds to the max width of the right hand width (Damage text)
+
+
+def clear_screen():
+    # Sourced from:
+        # https://www.csestack.org/clear-python-interpreter-console/#:~:text=You%20can%20clear%20the%20Python,system%2C%20cls%20clear%20the%20console. and
+        # https://stackoverflow.com/questions/18937058/clear-screen-in-shell/47296211
+    # checking for opperating system in order to provide the right command
+    if sys.platform == 'linux' or sys.platform == 'linux2' or sys.platform == 'darwin':  # clear command for Lynicx and Mac opperating systems
+        os.system('clear')
+    elif sys.platform == 'win32':
+        os.system('cls')
 
     # running code
 game = Game()
