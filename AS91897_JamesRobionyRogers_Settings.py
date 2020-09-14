@@ -17,7 +17,14 @@ HOW_TO_PLAY = f"""
     Game will pause to allow the player to read. Click ENTER to proceed when ready.\n
 """
 
-MAX_HEALTH = 10
+MAX_HEALTH = 80
+
+# setting table print settings
+TABLE_LETTER_PAUSE = 0.01
+TABLE_ENTER_PAUSE = 0
+
+# PLAYER & OPPONENT VAIRBALES
+DODGE_CHANCE = 8  # 8% chance to dodge
 
 # PLAYER SETTINGS
 PLAYER_HEALTH = MAX_HEALTH
@@ -29,7 +36,9 @@ ALL_WEAPONS = {'Floss': random.randint(10, 15),
 OPPONENT_HEALTH = MAX_HEALTH
 OPPONENT_NAMES_LIST = ['Lollies', 'Soda', 'Citrus', 'Chocolate']
 OPPONENT_NAME = random.choice(OPPONENT_NAMES_LIST)
-OPPONENT_DAMAGE = random.randint(5, 16)
+OPPONENT_DAMAGE_RANGE = [5, 16]
+OPPONENT_DAMAGE = random.randint(OPPONENT_DAMAGE_RANGE[0], OPPONENT_DAMAGE_RANGE[1])
+
 
 OPPONENT_ATTACK_TEXT = [f"{OPPONENT_NAME} swung potentialy causing {OPPONENT_DAMAGE} points of damage\n",
                         f"{OPPONENT_NAME} swung potentialy causing {OPPONENT_DAMAGE} points of damage\n"]

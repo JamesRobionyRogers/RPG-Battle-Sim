@@ -34,16 +34,20 @@ class Characters():
         self.display_name = input()
 
     def select_weapon(self):
-        # printing to player
-        type("\n\nWeapons available: \n", enter_pause=0.2)
+        # Setup Top Lines of the Table
+        type("|----------------------------------------|\n", table=True)
+        type("|           Weapons Available            |\n", table=True)
+        type("|----------------------------------------|\n", table=True)
+        type("|  Weapon Name  |  Weapon Damage  |//////|\n", table=True)
+        type("|----------------------------------------|\n", table=True)
 
         # itterate through available weapons and assign random damage values
         for weapon in self.available_weapons:
             self.available_weapons[weapon] = random.randint(10, 18)
-            # type(f"Weapon: {weapon}      Damage: {self.available_weapons[weapon]}\n")
-            weapon_string = f"Weapon: {weapon}"
-            damage_string = f"Damage: {self.available_weapons[weapon]}"
-            type(formatted_print(weapon_string, damage_string))
+            damage_string = f"      {self.available_weapons[weapon]}       "
+            type(formatted_print(weapon, damage_string, " - "), table=True)
+
+        type("|________________________________________|\n", table=True)
 
         # selecting weapon
         while self.player_selected_weapon not in self.available_weapons:
@@ -61,17 +65,19 @@ class Characters():
         type(f"\n{self.display_name} swung the {self.player_selected_weapon} potentialy causing {self.player_damage} points of damage\n")
 
         # reduce the health of opponent unless dodged (8%)
-        if random.randint(1, 100) <= 8:  # opponent dodged message
+        if random.randint(1, 100) <= DODGE_CHANCE:  # opponent dodged message
             type("Unfortunatly, the opponent managed to dodge. Your attack was ineffective this time...\n\n")
         else:
             self.opponent_health -= self.player_damage
 
     def opponent_attack(self):
+        # setting random damage value
+        self.opponent_damage = random.randint(OPPONENT_DAMAGE_RANGE[0], OPPONENT_DAMAGE_RANGE[1])  # CHECK if this is working, doesn seem like it is
         # attack message
         type(random.choice(self.opponent_attack_text))
 
-        # reduce the health of opponent unless dodged (8%)
-        if random.randint(1, 100) <= 8:  # opponent dodged message
+        # reduce the health of player unless dodged (8%)
+        if random.randint(1, 100) <= 8:  # player dodged message
             print(f"\nFortunatly you were able to dodge the {self.opponent_name}'s attack.    No damage was taken...\n")
         else:
             self.player_health -= self.opponent_damage
@@ -121,7 +127,7 @@ class Game:
 
     def turn(self):
 
-        type(f"\nTurn: {self.turn_count}", enter_pause=0)
+        type(f"\nTurn: {self.turn_count}\n", enter_pause=0)
         # choose weapon
         self.character.select_weapon()
         # attack opponent
@@ -145,19 +151,19 @@ class Game:
 
     def credits(self):
         # title of the Game
-        print(f"\nThank you for playing {self.TITLE}\n")
-        print("This is a school project for the Advanced Processes Internal in Year 12 at Onslow College for the year of 2020\n\n")
-        print("Game developed by: James Robiony-Rogers")
+        type(f"\nThank you for playing {self.TITLE}\n")
+        type("This is a school project for the Advanced Processes Internal in Year 12 at Onslow College for the year of 2020\n\n")
+        type("Game developed by: James Robiony-Rogers")
 
     def game_details(self):
-        # current player stats
-        type("------------------------------------------------------------\n", letter_pause=0.01, enter_pause=0)
-        type(f"Current player health: {self.character.player_health}\n", letter_pause=0.01, enter_pause=0)
-        # current opponent stats
-        type(f"Current opponent health: {self.character.opponent_health}\n", letter_pause=0.01, enter_pause=0)
-        # general stats of the game. E.g. turn count etc...
-        type(f"Current turn: {self.turn_count}\n", letter_pause=0.01, enter_pause=0)
-        type("------------------------------------------------------------\n", letter_pause=0.01, enter_pause=0)
+        # Printing out table
+        type("|----------------------------------------|\n", table=True)
+        type("|              Game Details              |\n", table=True)
+        type("|----------------------------------------|\n", table=True)
+        type("| Player Health | Opponent Health | Turn |\n", table=True)
+        type("|----------------------------------------|\n", table=True)
+        type(formatted_print(self.character.player_health, self.character.opponent_health, self.turn_count), table=True)
+        type("|________________________________________|\n\n", table=True)
 
     def pause(self):
         input()
@@ -166,7 +172,7 @@ class Game:
 
         # intro to game has already been executed
 
-        type("\nWhat are we waiting for? Lets get right into it...")
+        type("\nWhat are we waiting for? Lets get right into it...\n")
 
         while self.running:
             self.turn()
@@ -179,7 +185,12 @@ class Game:
                 self.win_condition()
 
 
-def type(string, letter_pause=0.015, enter_pause=0.5):  # sourced from: https://stackoverflow.com/questions/9246076/how-to-print-one-character-at-a-time-on-one-line
+def type(string, letter_pause=0.015, enter_pause=0.5, table=False):  # sourced from: https://stackoverflow.com/questions/9246076/how-to-print-one-character-at-a-time-on-one-line
+    # setting pauses for type table
+    if table:
+        letter_pause = TABLE_LETTER_PAUSE
+        enter_pause = TABLE_ENTER_PAUSE
+
     for letter in string:
         sys.stdout.write(letter)
         sys.stdout.flush()
@@ -189,8 +200,8 @@ def type(string, letter_pause=0.015, enter_pause=0.5):  # sourced from: https://
             time.sleep(letter_pause)
 
 
-def formatted_print(weapon, damage):  # sourced from: https://stackoverflow.com/questions/11245381/formatting-console-output
-    return "%-25s %-15s\n" % (weapon, damage)  # "%-25s" corrisponds to the max width of the left hand width (Weapon text) "%-15s" corrisponds to the max width of the right hand width (Damage text)
+def formatted_print(value1=0, value2=0, value3=0):  # sourced from: https://stackoverflow.com/questions/11245381/formatting-console-output
+    return "| %-13s | %-15s | %-4s |\n" % (value1, value2, value3)  # "%-13s" corrisponds to the max width of the left hand width
 
 
 def clear_screen():
@@ -203,7 +214,8 @@ def clear_screen():
     elif sys.platform == 'win32':
         os.system('cls')
 
-    # running code
+
+# running code
 game = Game()
 game.run_game()
 
