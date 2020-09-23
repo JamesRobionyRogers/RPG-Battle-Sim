@@ -25,7 +25,6 @@ class Characters():
         # initiating the opponent vairables
         self.opponent_name = OPPONENT_NAME
         self.opponent_health = OPPONENT_HEALTH
-        print("OPPONENT_HEALTH", self.opponent_health)
         self.opponent_damage = OPPONENT_DAMAGE
         self.opponent_attack_text = OPPONENT_ATTACK_TEXT
 
@@ -33,7 +32,7 @@ class Characters():
         type("\nWhat is your display name: ", letter_pause=0.01)
         self.display_name = input()
 
-    def select_weapon(self):
+    def select_weapon(self):  # component refined during sprint 2
         # Setup Top Lines of the Table
         type("|----------------------------------------|\n", table=True)
         type("|           Weapons Available            |\n", table=True)
@@ -89,6 +88,7 @@ class Game:
         # defining game constants
         self.TITLE = TITLE
         self.HOW_TO_PLAY = HOW_TO_PLAY
+        self.DENTAL_HYGIENE_PRACTICES = DENTAL_HYGIENE_PRACTICES
 
         # Defining game vairables
         self.running = True
@@ -100,7 +100,7 @@ class Game:
         # initiate player and opponent class' after introduction
         self.character = Characters()
 
-    def intro(self):
+    def intro(self):  # component refined during sprint 2
         type(f"Welcome to {self.TITLE} \n", letter_pause=0.01, enter_pause=0.3)
         type(self.HOW_TO_PLAY, letter_pause=0.008, enter_pause=0.2)
 
@@ -126,6 +126,7 @@ class Game:
         self.running = False
 
     def turn(self):
+        clear_screen()
 
         type(f"\nTurn: {self.turn_count}\n", enter_pause=0)
         # choose weapon
@@ -141,6 +142,7 @@ class Game:
             self.game_details()
 
         # proceed when player clicks enter
+        self.dental_practices()
         self.pause()
 
         # update general game game stats
@@ -155,7 +157,7 @@ class Game:
         type("This is a school project for the Advanced Processes Internal in Year 12 at Onslow College for the year of 2020\n\n")
         type("Game developed by: James Robiony-Rogers")
 
-    def game_details(self):
+    def game_details(self):  # component refined during srint 2
         # Printing out table
         type("|----------------------------------------|\n", table=True)
         type("|              Game Details              |\n", table=True)
@@ -167,6 +169,13 @@ class Game:
 
     def pause(self):
         input()
+
+    def dental_practices(self):
+        time.sleep(0.55)
+        try:
+            type(self.DENTAL_HYGIENE_PRACTICES[(self.turn_count - 1)], letter_pause=0.015, enter_pause=0.02)
+        except:  # in the case that the turn count has exceded the amount of DENTAL_HYGIENE_PRACTICES
+            pass
 
     def run_game(self):
 

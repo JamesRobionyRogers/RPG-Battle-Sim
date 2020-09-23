@@ -19,9 +19,16 @@ HOW_TO_PLAY = f"""
 
 MAX_HEALTH = 80
 
+
 # setting table print settings
 TABLE_LETTER_PAUSE = 0.01
 TABLE_ENTER_PAUSE = 0
+
+DENTAL_HYGIENE_PRACTICES = ["If there's one thing to take away from this game, it's got to be: \nDon't go to bed without brushing your teeth. Keep those precious teeth squeeky clean\n",
+                            "If you're having trouble cleaning those teeth of yours, give this a go: \nTry moving your toothbrush gentialy using circular motions, this should do the trick to \nremove any plaque that may have built up on your teeth\n",
+                            "Dont forget your tongue!  Plaque can also build up on your tongue and believe me, \nI may only be a computer game, but you do NOT want to be the person with stinky breath.\n",
+                            "Do you know what the F word is?  If you said flossing you'd be 100% correct. Flossing has many advantages such as: \n  - Reducing plaque \n  - Lowering inflammation in the gum area \n  - Stimulating your gums\n",
+                            "Finaly the easiest way to improve your dential is plain and simply to drink water. That easy. \nDrinking water after every meal can help out some of the negative effects of sticky and acidic foods and beverages in between brushes\n"]
 
 # PLAYER & OPPONENT VAIRBALES
 DODGE_CHANCE = 8  # 8% chance to dodge
