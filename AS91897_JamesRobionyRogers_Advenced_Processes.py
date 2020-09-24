@@ -218,21 +218,15 @@ def clear_screen():
         # https://www.csestack.org/clear-python-interpreter-console/#:~:text=You%20can%20clear%20the%20Python,system%2C%20cls%20clear%20the%20console. and
         # https://stackoverflow.com/questions/18937058/clear-screen-in-shell/47296211
     # checking for opperating system in order to provide the right command
-    if sys.platform == 'linux' or sys.platform == 'linux2' or sys.platform == 'darwin':  # clear command for Lynicx and Mac opperating systems
-        os.system('clear')
-    elif sys.platform == 'win32':
-        os.system('cls')
+    try:
+        if sys.platform == 'linux' or sys.platform == 'linux2' or sys.platform == 'darwin':  # clear command for Lynicx and Mac opperating systems
+            os.system('clear')
+        elif sys.platform == 'win32':
+            os.system('cls')
+    except:
+        pass
 
 
 # running code
 game = Game()
 game.run_game()
-
-"""
-NOTE:
-lenency: if the word is in the users input then run, rather than only having to have to put the word in it
-
-FEEDBACK:   REGAN MEYNELL
-- Have different opponents. Be able to vs another one then run away when you dont want to vs any more
--
-"""
