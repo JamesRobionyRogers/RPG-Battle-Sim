@@ -36,7 +36,9 @@ DODGE_CHANCE = 8  # 8% chance to dodge
 # PLAYER SETTINGS
 PLAYER_HEALTH = MAX_HEALTH
 ALL_WEAPONS = {'Floss': random.randint(10, 15),
-               'Toothbrush': random.randint(12, 18)}
+               'Toothbrush': random.randint(12, 18),
+               'Mouthwash': random.randint(10, 15),
+               'Toothpaste': random.randint(10, 15)}
 
 
 # OPPONENT SETTINGS
@@ -52,4 +54,4 @@ OPPONENT_ATTACK_TEXT = [f"{OPPONENT_NAME} swung potentialy causing {OPPONENT_DAM
 
 
 if __name__ == '__main__':
-    print("\nRunning wring script. Run AS91897_JamesRobionyRogers_Advenced_Processes.py")
+    print("\nRunning wrong script. Run AS91897_JamesRobionyRogers_Advenced_Processes.py")

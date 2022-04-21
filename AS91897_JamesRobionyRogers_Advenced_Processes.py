@@ -101,6 +101,7 @@ class Game:
         self.character = Characters()
 
     def intro(self):  # component refined during sprint 2
+        clear_screen()
         type(f"Welcome to {self.TITLE} \n", letter_pause=0.01, enter_pause=0.3)
         type(self.HOW_TO_PLAY, letter_pause=0.008, enter_pause=0.2)
 
@@ -117,7 +118,7 @@ class Game:
     def lose_condition(self):
         # losing message
         type(f"\nUnfortunatly {self.character.opponent_name} was able to defeat you :(")
-        type(f"\nTry again and see if you have the courage to defeat the dential enemies\n")
+        type("\nTry again and see if you have the courage to defeat the dential enemies\n")
         # game stats
         self.game_details()
         # game development cradits
@@ -215,8 +216,8 @@ def formatted_print(value1=0, value2=0, value3=0):  # sourced from: https://stac
 
 def clear_screen():
     # Sourced from:
-        # https://www.csestack.org/clear-python-interpreter-console/#:~:text=You%20can%20clear%20the%20Python,system%2C%20cls%20clear%20the%20console. and
-        # https://stackoverflow.com/questions/18937058/clear-screen-in-shell/47296211
+    # https://www.csestack.org/clear-python-interpreter-console/#:~:text=You%20can%20clear%20the%20Python,system%2C%20cls%20clear%20the%20console. and
+    # https://stackoverflow.com/questions/18937058/clear-screen-in-shell/47296211
     # checking for opperating system in order to provide the right command
     try:
         if sys.platform == 'linux' or sys.platform == 'linux2' or sys.platform == 'darwin':  # clear command for Lynicx and Mac opperating systems

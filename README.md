@@ -64,6 +64,13 @@ git clone https://github.com/JamisBuggerlugs/RPG_Battle_Sim.git
 3. Run the file ```AS91897_JamesRobionyRogers_Advenced_Processes.py```
 
 
+## Usage
+
+Below is a demo of the final product. 
+
+<img src="readme-assets/Demo.gif">
+
+
 <!-- Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources. -->
 
 ## Improvements (2022):
