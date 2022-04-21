@@ -68,7 +68,7 @@ git clone https://github.com/JamisBuggerlugs/RPG_Battle_Sim.git
 
 ## Improvements (2022):
 
-- [ ] Refactoring the code would be a good idea as I wrote it so long ago and with little understanding of OOP
+- [ ] Refactoring the code would be a good idea as I wrote it so long ago and with little understanding of OOP 
 
 
 ___
